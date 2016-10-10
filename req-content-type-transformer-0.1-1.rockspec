@@ -1,5 +1,5 @@
 package = "req-content-type-transformer"
-version = "0.0.1-1"
+version = "0.1-1"
 supported_platforms = {"linux", "macosx"}
 source = {
   url = "git://github.com/spiritonly/kong-plugin-req-content-type-transformer",
