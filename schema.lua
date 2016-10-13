@@ -4,7 +4,7 @@ return {
   no_consumer = true,
   fields = {
     -- Describe your plugin's configuration's schema here.
-    transformer = {type = "array", required = true, enum = {"JSON_TO_FORM", "FORM_TO_JSON"}}
+    transformer = {type = "string", required = true, enum = {"JSON_TO_FORM", "FORM_TO_JSON"}}
   },
   -- @param `schema` A table describing the schema (rules) of your plugin configuration.
   -- @param `config` A key/value table of the current plugin's configuration.

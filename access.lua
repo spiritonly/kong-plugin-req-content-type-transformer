@@ -49,18 +49,6 @@ local function decode_args(body)
   return {}
 end
 
-local function iter(config_array)
-  return function(config_array, i, previous_name, previous_value)
-    i = i + 1
-    local current_pair = config_array[i]
-    if current_pair == nil then -- n + 1
-      return nil
-    end
-    local current_name, current_value = unpack(stringy.split(current_pair, ":"))
-    return i, current_name, current_value
-  end, config_array, 0
-end
-
 local function get_content_type(content_type)
   if content_type == nil then
     return
@@ -95,7 +83,7 @@ end
 local function req_transform(conf)
   local content_type_value = req_get_headers(0)[CONTENT_TYPE]
   local content_type = get_content_type(content_type_value)
-  if content_type == nil or #conf.head_to_body < 1 then
+  if content_type == nil or conf.transformer == nil then
     return -- POST body only supports three basic types.
   end
 
@@ -105,7 +93,7 @@ local function req_transform(conf)
   local content_length = (body and string_len(body)) or 0
   -- Call req_read_body to read the request body first
   if "JSON_TO_FORM" == conf.transformer and content_type == JSON then
-    isbody_transformed, body = transform_json_to_form(body, content_length)
+    is_body_transformed, body = transform_json_to_form(body, content_length)
   end
 
   if "FORM_TO_JSON" == conf.transformer and content_type == FORM then
